@@ -1,0 +1,54 @@
+alter table 
+[dbo].[BusOriginalRoute]
+add constraint myConstraint
+ primary key(PNo,ORId)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------
+create table DriverChange
+(Id int primary key identity,
+ PNo int foreign key references Bus(PNo) on delete cascade,
+ OdId int not null foreign key references Driver(Id) on delete cascade,
+ NewDriverName varchar(30) not null ,
+ Change_Date date,
+ Reason varchar(50) not null
+)
+
+select * from DriverChange
+
+insert into DriverChange values(1112,1,'Ahmad','2019/11/12','Due to More Crash')
+
+select DriverChange.Change_Date ,Bus.PNo ,Driver.Name as[Old Driver Name],DriverChange.NewDriverName,DriverChange.Reason
+from Bus inner join DriverChange on Bus.PNo=DriverChange.PNo
+inner join Driver on DriverChange.OdId=Driver.Id
+
+
+
+
+select Bus.PNo ,Driver.Name as[Old Driver],Driver.Name as[New Driver],DriverChange.Change_Date
+from Bus inner join DriverChange  as C on C.PNo=Bus.PNo
+
+
+
+
+
+
+
+
+
+
+
